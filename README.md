@@ -2,7 +2,7 @@
 
 Think-ScienceQA leverages a lightweight semantic adapter to align textual and visual modalities effectively. In addition, a multi-stage self-consistent CoT mechanism offers structured guidance for generating optimal rationales. Furthermore, a two-stage fine-tuning strategy enables the LLMs to first generate structured reasoning, and then perform accurate answer inference.
 
-![pipline](pipline.png)
+![pipline](Code/pipline.png)
 
 
 
