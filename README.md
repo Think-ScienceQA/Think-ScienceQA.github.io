@@ -5,6 +5,7 @@ Think-ScienceQA leverages a lightweight semantic adapter to align textual and vi
 ![pipline](Code/pipline.png)
 
 
+All the code is stored in the 'Code' folder.
 
 ## Requirements
 
