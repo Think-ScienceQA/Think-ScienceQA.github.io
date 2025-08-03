@@ -161,21 +161,7 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <p>Chain-of-Thought (CoT) prompting improves reasoning performance but is inherently constrained by its single-path
-            paradigm, often leading to missing steps and semantic misunderstandings. Moreover, existing approaches struggle to
-            effectively integrate multi-modal information and maintain
-            coherent reasoning, limiting their performance on complex
-            multi-modal tasks in ScienceQA. To overcome these challenges, this paper introduces Think-ScienceQA, a stage-wise
-            plan-and-solve self-consistent reasoning framework guided
-            by a semantic adapter, which explicitly thinks stage by stage
-            to perform planned reasoning in ScienceQA tasks. Think-ScienceQA generates multiple candidate reasoning paths and
-            employs a stage-wise self-consistency mechanism to identify the most coherent and reliable solution. In addition, a
-            lightweight semantic adapter is designed to bridge the semantic gap between frozen visual encoders and language
-            models, enabling more precise and efficient multi-modal feature alignment. Despite having only 228M parameters, approximately 6% the size of the strongest fine-tuned baseline,
-            Think-ScienceQA achieves state-of-the-art performance on
-            both the ScienceQA and A-OKVQA benchmarks. Extensive
-            ablation studies demonstrate that the stage-wise reasoning design and self-consistency mechanism contribute performance
-            gains of 6.7 and 4.1 percentage points, respectively.</p>
+         <p>Chain-of-Thought (CoT) prompting enhances reasoning but suffers from its single-path nature, often missing steps or causing semantic drift. Existing methods also struggle to effectively fuse multimodal information, limiting their capability on complex tasks like ScienceQA. To address this, we propose Think-ScienceQA, a stage-wise plan-and-solve framework with a semantic adapter. It generates multiple reasoning candidates and applies stage-wise self-consistency to select coherent answers. The lightweight semantic adapter bridges frozen visual encoders and language models for improved multimodal alignment. Despite using only 228M parameters (≈6% of the best fine-tuned model), Think-ScienceQA achieves state-of-the-art results on ScienceQA and A-OKVQA. Ablation studies show the planning and self-consistency modules contribute 6.7% and 4.1% performance gains, respectively.</p>
         </div>
       </div>
     </div>
@@ -195,8 +181,7 @@
           <figure class="image">
             <img src="static/images/pipline.png" alt="Think-ScienceQA Pipeline Diagram">
             <figcaption class="has-text-centered mt-4">
-              The framework aligns textual and visual modalities using a lightweight semantic adapter. A Stage-wise CoT mechanism guides the generation of optimal rationales. A two-stage fine-tuning strategy further instructs the LLMs to first produce structured reasoning, followed by final answer inference.</figcaption>
-          </figure>
+              The framework leverages a lightweight adapter for modality alignment and a stage-wise CoT process to generate and select reasoning candidates. A two-step tuning guides the model to produce structured rationales before inferring final answers.</figure>
         </div>
       </div>
     </div>
@@ -221,82 +206,9 @@
 <!--      </div>-->
 <!--    </div>-->
 <!--  </section>-->
-  <!-- 数据集重标注 & 构建流程（纯滑动窗版） --><!-- 数据集重标注 & 构建流程（带标题、缩小窗口、图片居中） -->
-  <section class="section">
-    <div class="container is-max-desktop">
+<!--    -->
 
-      <!-- 新增标题 -->
-      <h2 class="title is-3">Dataset Re-annotation</h2>
 
-      <!-- 总览说明（保留） -->
-      <div class="content has-text-centered mb-5">
-        <p>
-          To build a high-quality training set for Think-ScienceQA, this paper re-annotates ScienceQA & A-OKVQA with GPT-4o to create a high-quality training set.
-          Each sample now contains four structured components—<strong>Summary, Caption, Reasoning, Conclusion</strong>.
-          The overview details the generation, validation, and filtering procedures for these rationales.
-        </p>
-      </div>
-
-      <!-- 缩小并居中轮播图 -->
-      <div style="max-width: 800px; margin: 0 auto;">
-        <div id="dataset-carousel" class="carousel results-carousel">
-          <!-- Step 1: 重标注总览 -->
-          <div class="item">
-            <h3 class="subtitle has-text-centered">Step 1: Re-annotation Overview</h3>
-            <figure class="image" style="display:flex; justify-content:center;align-items:center;">
-              <img src="static/images/Datasets%20Re-annotation.png"
-                   alt="Re-annotation Overview"
-                   style="max-width:100%; height:auto;" />
-            </figure>
-            <p class="has-text-centered mt-3">
-              Use GPT-4o to produce four-stage rationales: Summary → Caption → Reasoning → Conclusion.
-            </p>
-          </div>
-
-          <!-- Step 2: Prompt 设计 -->
-          <div class="item">
-            <h3 class="subtitle has-text-centered">Step 2: Prompt Design</h3>
-            <figure class="image" style="display:flex; justify-content:center;align-items:center;">
-              <img src="static/images/Fig5.png"
-                   alt="Prompt for GPT-4o"
-                   style="max-width:100%; height:auto;" />
-            </figure>
-            <p class="has-text-centered mt-3">
-              Carefully-crafted prompts ensure consistent and structured output.
-            </p>
-          </div>
-
-          <!-- Step 3: 格式验证 -->
-          <div class="item"
-               style="display:flex !important; flex-direction:column; justify-content:center; align-items:center; height:100%;">
-            <h3 class="subtitle has-text-centered">Step 3: Format Validation</h3>
-            <img src="static/images/Fig6.png"
-                 alt="Validation Process"
-                 style="max-height:70%; width:auto; max-width:90%;">
-            <p class="has-text-centered mt-3">
-              Filter out responses that deviate from the required four-stage structure.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 滑动窗初始化（保持不变） -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      bulmaCarousel.attach('#dataset-carousel', {
-        slidesToScroll: 1,
-        slidesToShow: 1,
-        infinite: true,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        pauseOnHover: true,
-        navigation: true,
-        pagination: true
-      });
-    });
-  </script>
   <!-- 统一描述区域 -->
 
 
@@ -307,14 +219,7 @@
       <div class="columns is-centered">
         <div class="column is-10">
 
-          <!-- 引导语 -->
-          <div class="content has-text-justified mb-5">
-            <p>
-              After extensive experimentation across various model scales and training setups,
-              we present a representative visualization of the <strong>Performance–Size Trade-off</strong> to highlight the scalability and efficiency of Think-ScienceQA.
-            </p>
-          </div>
-
+        
           <!-- 图像部分 -->
           <figure class="image">
             <img src="static/images/figure8.png" alt="Performance–Size Trade-off on ScienceQA">
@@ -323,16 +228,9 @@
           <!-- 文字描述 -->
           <div class="content has-text-justified mt-5">
             <p>
-              The scatter plot shows that <strong>Think-ScienceQA</strong> achieves an excellent performance–size balance.
-              <strong>Think-ScienceQA<sub>large</sub></strong> attains <strong>95.59%</strong> accuracy, and
-              <strong>Think-ScienceQA<sub>base</sub></strong> reaches <strong>93.86%</strong>—both outperforming LLaVA (90.92%),
-              LLaVA+GPT-4 (92.53%), and LLaMA-Adapter (85.19%).
-            </p>
-            <p>
-              Moreover, <strong>Think-ScienceQA<sub>base</sub></strong> surpasses the larger Multimodal-CoT<sub>large</sub> (91.68%),
-              demonstrating strong reasoning even at smaller scales.
-              <strong>Think-ScienceQA<sub>large</sub></strong> further outperforms it with similar parameter counts,
-              highlighting our approach’s efficiency and scalability without requiring massive model growth.
+              The scatter plot illustrates the strong performance–efficiency trade-off of Think-ScienceQA.
+              The large variant achieves 95.59% accuracy, while the base model reaches 93.86%, both surpassing LLaVA (90.92%), LLaVA+GPT-4 (92.53%), and LLaMA-Adapter (85.19%).
+              Notably, Think-ScienceQA<sub>base</sub> outperforms the larger Multimodal-CoT<sub>large</sub> (91.68%), and Think-ScienceQA<sub>large</sub> achieves even better results with a comparable model size, emphasizing the framework’s scalability and reasoning strength without model over-expansion.
             </p>
           </div>
 
@@ -344,7 +242,7 @@
   <!-- 实验过程与消融研究滑动窗（缩小 + 图片完全居中） -->
   <section class="section">
     <div class="container is-max-desktop">
-      <h2 class="title is-3">Experimental Process & Ablation Studies</h2>
+      <h2 class="title is-3">Performance Results on ScienceQA and A-OKVQA</h2>
 
       <!-- 缩小并居中轮播图 -->
       <div style="max-width:800px; margin:0 auto;">
@@ -371,42 +269,6 @@
                  style="max-height:90%; width:auto; max-width:90%;">
             <p class="has-text-centered mt-3">
               Direct answer: 61.7% | With choices: 66.0% - outperforming 11B BLIP-2
-            </p>
-          </div>
-
-          <!-- 3. 结构化标签的影响 -->
-          <div class="item"
-               style="display:flex !important; flex-direction:column; justify-content:center; align-items:center; height:100%;">
-            <h3 class="subtitle has-text-centered">Impact of Structured Labels</h3>
-            <img src="static/images/Impact%20of%20structured%20labels%20on%20ScienceQA.png"
-                 alt="Structured Labels Ablation"
-                 style="max-height:100%; width:auto; max-width:100%;">
-            <p class="has-text-centered mt-3">
-              +6.81% improvement with structured reasoning labels (93.86% vs 87.05%)
-            </p>
-          </div>
-
-          <!-- 4. 推理路径质量影响 -->
-          <div class="item"
-               style="display:flex !important; flex-direction:column; justify-content:center; align-items:center; height:100%;">
-            <h3 class="subtitle has-text-centered">Impact of Reasoning Path Quality</h3>
-            <img src="static/images/mpact%20of%20reasoning%20path%20quality%20on%20ScienceQA..png"
-                 alt="Reasoning Quality Analysis"
-                 style="max-height:100%; width:auto; max-width:100%;">
-            <p class="has-text-centered mt-3">
-              Higher Rouge-L scores correlate with better accuracy (98.23 vs 96.97)
-            </p>
-          </div>
-
-          <!-- 5. 推理路径数量实验 -->
-          <div class="item"
-               style="display:flex !important; flex-direction:column; justify-content:center; align-items:center; height:100%;">
-            <h3 class="subtitle has-text-centered">Effect of Reasoning Path Count</h3>
-            <img src="static/images/varying%20numbers%20of%20reasoning%20paths.png"
-                 alt="Path Count Analysis"
-                 style="max-height:100%; width:auto; max-width:100%;">
-            <p class="has-text-centered mt-3">
-              10 paths (95.59%) > 5 paths (95.45%) > 0 paths (91.68%)
             </p>
           </div>
 
@@ -437,7 +299,7 @@
   <section class="section">
     <div class="container is-max-desktop">
       <h2 class="title is-3">
-        Typical Errors and Structured Reasoning Improvements in Think–ScienceQA for Complex Multimodal Tasks
+         A Comparative Evaluation of Baseline and Think-ScienceQA on Diverse Multimodal Tasks
       </h2>
 
       <div class="content has-text-centered mb-5">
